@@ -1,19 +1,17 @@
-class Stopwatch{
+class Stopwatch extends React.Component{
 
-    constructor(display) {
-        this.running = false;
-        this.display = display;
-        this.reset();
-        this.print(this.times);
-    }
-
-    reset() {
-        this.times = {
+    constructor(props) {
+    super(props);
+    this.state = {
+        times: {
             minutes: 0,
             seconds: 0,
             miliseconds: 0
-        };
-    }
+        }
+    };
+    this.running = false;
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this); 
 
     print() {
         this.display.innerText = this.format(this.times);
@@ -57,14 +55,24 @@ class Stopwatch{
     }
 }
 
-const stopwatch = new Stopwatch(
-document.querySelector('.stopwatch'));
-
-let startButton = document.getElementById('start');
-startButton.addEventListener('click', () => stopwatch.start());
-
-let stopButton = document.getElementById('stop');
-stopButton.addEventListener('click', () => stopwatch.stop());
+render() {
+        
+        return (
+          <div className="container">
+            <nav className="controls">
+                <a className="button dark" href="#" onClick={this.start}>
+                    Start
+                </a>
+                <a className="button normal" href="#" onClick={this.stop}> 
+                    Stop 
+                </a>
+            </nav>
+            <div className="results"></div>
+           
+          </div>
+        );
+      }
+}
 
 
 
