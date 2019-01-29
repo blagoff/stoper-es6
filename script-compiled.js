@@ -1,5 +1,4 @@
 class Stopwatch extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -29,29 +28,28 @@ class Stopwatch extends React.Component {
         }
     }
 
+    step() {
+        if (!this.running) return;
+        this.calculate();
+    }
+
     calculate() {
-        this.times.miliseconds += 1;
-
-        if (this.times.miliseconds >= 100) {
-            this.times.seconds += 1;
-            this.times.miliseconds = 0;
+        const times = this.state.times;
+        times.miliseconds += 1;
+        if (times.miliseconds >= 100) {
+            times.seconds += 1;
+            times.miliseconds = 0;
         }
-
-        if (this.times.seconds >= 60) {
-            this.times.minutes += 1;
-            this.times.seconds = 0;
+        if (times.seconds >= 60) {
+            times.minutes += 1;
+            times.seconds = 0;
         }
+        this.setState({ times });
     }
 
     stop() {
         this.running = false;
         clearInterval(this.watch);
-    }
-
-    step() {
-        if (!this.running) return;
-        this.calculate();
-        this.print();
     }
 
     render() {
@@ -64,14 +62,19 @@ class Stopwatch extends React.Component {
                 { className: "controls" },
                 React.createElement(
                     "a",
-                    { className: "button dark", href: "#", onClick: this.start },
+                    { className: "button", href: "#", onClick: this.start },
                     "Start"
                 ),
                 React.createElement(
                     "a",
-                    { className: "button normal", href: "#", onClick: this.stop },
+                    { className: "button", href: "#", onClick: this.stop },
                     "Stop"
                 )
+            ),
+            React.createElement(
+                "div",
+                { className: "stopwatch" },
+                this.format(this.state.times)
             ),
             React.createElement("div", { className: "results" })
         );
@@ -80,7 +83,6 @@ class Stopwatch extends React.Component {
 
 function pad0(value) {
     let result = value.toString();
-
     if (result.length < 2) {
         result = '0' + result;
     }

@@ -1,21 +1,20 @@
-class Stopwatch extends React.Component{
- 
+class Stopwatch extends React.Component {
     constructor(props) {
-    super(props);
-    this.state = {
-        times: {
-            minutes: 0,
-            seconds: 0,
-            miliseconds: 0
-        }
-    };
-    this.running = false;
-    this.start = this.start.bind(this);
-    this.stop = this.stop.bind(this); 
+        super(props);
+        this.state = {
+            times: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        };
+        this.running = false;
+        this.start = this.start.bind(this);
+        this.stop = this.stop.bind(this); 
     }
 
-    print(){
-        this.display.innerText = this.format(this.times);
+    print() {
+       this.display.innerText = this.format(this.times);
     }
 
     format(times) {
@@ -26,21 +25,29 @@ class Stopwatch extends React.Component{
         if (!this.running) {
             this.running = true;
             this.watch = setInterval(() => this.step(), 10);
-            }
+        }
     }
+
+    step() {
+        if (!this.running) return;
+        this.calculate();
+        
+    }
+
+   
 
     calculate() {
-        this.times.miliseconds += 1;
-
-    if (this.times.miliseconds >= 100){
-        this.times.seconds += 1;
-        this.times.miliseconds = 0;
-    }
-
-    if (this.times.seconds >= 60) {
-        this.times.minutes += 1;
-        this.times.seconds = 0;
+        const times = this.state.times;
+        times.miliseconds += 1;
+        if (times.miliseconds >= 100) {
+            times.seconds += 1;
+            times.miliseconds = 0;
         }
+        if (times.seconds >= 60) {
+            times.minutes += 1;
+            times.seconds = 0;
+        }
+        this.setState({times});
     }
 
     stop() {
@@ -48,17 +55,7 @@ class Stopwatch extends React.Component{
         clearInterval(this.watch);
     }
 
-
-    step() {
-        if (!this.running) return;
-        this.calculate();
-        this.print();
-    }
-
- 
-
-
-render() {
+    render() {
         
         return (
           <div className="container">
@@ -69,20 +66,23 @@ render() {
                 <a className="button normal" href="#" onClick={this.stop}> 
                     Stop 
                 </a>
-                
             </nav>
+            <div className="stopwatch">
+            {this.format(this.state.times)}
+            </div>
             <div className="results"></div>
+           
+            
            
           </div>
         );
       }
 }
-
+    
 
 
 function pad0(value) {
     let result = value.toString();
-
     if (result.length < 2) {
         result = '0' + result;
     }
@@ -90,6 +90,11 @@ function pad0(value) {
 }
 
 
-
 const app = document.getElementById('app')
 ReactDOM.render(<Stopwatch/>, app);
+
+
+
+
+
+
