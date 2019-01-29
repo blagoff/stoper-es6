@@ -1,5 +1,5 @@
 class Stopwatch extends React.Component{
-
+ 
     constructor(props) {
     super(props);
     this.state = {
@@ -12,8 +12,9 @@ class Stopwatch extends React.Component{
     this.running = false;
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this); 
+    }
 
-    print() {
+    print(){
         this.display.innerText = this.format(this.times);
     }
 
@@ -53,7 +54,9 @@ class Stopwatch extends React.Component{
         this.calculate();
         this.print();
     }
-}
+
+ 
+
 
 render() {
         
@@ -66,6 +69,7 @@ render() {
                 <a className="button normal" href="#" onClick={this.stop}> 
                     Stop 
                 </a>
+                
             </nav>
             <div className="results"></div>
            
@@ -85,3 +89,7 @@ function pad0(value) {
     return result;
 }
 
+
+
+const app = document.getElementById('app')
+ReactDOM.render(<Stopwatch/>, app);

@@ -11,7 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-latest": "^6.24.1"
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
   },
   "dependencies": {
     "babel-standalone": "^6.26.0"
